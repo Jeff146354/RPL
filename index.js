@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 require('dotenv').config()
 
@@ -44,7 +44,7 @@ app.post('/register', async (req, res) => {
 // LOGIN
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  
+
   pool.query(
     'SELECT * FROM users WHERE username = ?',
     [username],
@@ -52,18 +52,20 @@ app.post('/login', (req, res) => {
       if (error || results.length === 0) {
         return res.status(400).send('Username tidak ditemukan');
       }
-      
+
       const user = results[0];
-      const isMatch = await bcrypt.compare(password, user.PASSWORD);
-      
-      if (!isMatch) return res.status(400).send('Password salah');
-      
+      // akses property sesuai nama kolom di database
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).send('Password salah');
+      }
+
       res.send({
         status: 'success',
         user: {
           id: user.id,
           username: user.username,
-          role: user.ROLE
+          role: user.role
         }
       });
     }
