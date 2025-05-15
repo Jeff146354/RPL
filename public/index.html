@@ -658,13 +658,13 @@
 
                 async login() {
                         try {
-                        const response = await axios.post(`${API}/login`, this.loginData);
+                        const response = await axios.post(`/api/login`, this.loginData);
                         this.isLoggedIn = true;
                         this.currentUser = response.data.user;
                         await this.loadJadwal();
 
                         if(this.currentUser.role === 'mahasiswa') {
-                            const resp = await axios.get(`${API}/dosen`);
+                            const resp = await axios.get(`/api/dosen`);
                             this.listDosen = resp.data;
                         }
                         if(this.currentUser.role === 'dosen') {
@@ -679,7 +679,7 @@
                 async register() {
                     try {
                         // Ganti dengan API register sebenarnya
-                        await axios.post(`${API}/register`, this.registerData);
+                        await axios.post(`/api/register`, this.registerData);
                         alert('Registrasi berhasil! Silakan login');
                         this.activeTab = 'login';
                         this.registerData = { username: '', password: '' };
@@ -690,7 +690,7 @@
 
                 async buatJadwal() {
                   try {
-                    await axios.post(`${API}/jadwal`, {
+                    await axios.post(`/api/jadwal`, {
                       ...this.jadwalForm,
                         userId: this.currentUser.id,
                         penyelenggaraan: this.jadwalForm.penyelenggaraan,
@@ -704,7 +704,7 @@
                 },
 
                 async loadJadwal() {
-                const response = await axios.get(`${API}/jadwal`, {
+                const response = await axios.get(`/api/jadwal`, {
                     params: { 
                     userId: this.currentUser.id,
                     sort: 'tanggal_asc' // Tambahkan parameter sorting di backend
@@ -716,14 +716,14 @@
                 },
 
                 async loadVerifikasi() {
-                const resp = await axios.get(`${API}/verifikasi`, {
+                const resp = await axios.get(`/api/verifikasi`, {
                     params: { dosenId: this.currentUser.id }
                 });
                 this.verifList = resp.data;
                 },
 
                 async loadBimbingan() {
-                const response = await axios.get(`${API}/jadwal/bimbingan`, {
+                const response = await axios.get(`/api/jadwal/bimbingan`, {
                     params: { dosenId: this.currentUser.id }
                     });
                     this.bimbinganList = response.data;
@@ -731,7 +731,7 @@
 
                 async approve(jadwalId) {
                 try {
-                    await axios.post(`${API}/verifikasi`, {
+                    await axios.post(`/api/verifikasi`, {
                     jadwalId,
                     approved: true,
                     dosenId: this.currentUser.id, // Tambahkan dosenId
@@ -745,7 +745,7 @@
 
                 async reject(jadwalId) {
                 try {
-                    await axios.post(`${API}/verifikasi`, {
+                    await axios.post(`/api/verifikasi`, {
                     jadwalId,
                     approved: false,
                     dosenId: this.currentUser.id, // Tambahkan dosenId
@@ -759,7 +759,7 @@
 
                 async updateJadwal() {
                     try {
-                        await axios.put(`${API}/jadwal/${this.editData.id}`, {
+                        await axios.put(`/api/jadwal/${this.editData.id}`, {
                             userId: this.currentUser.id,
                             tanggal: this.editData.tanggal,
                             waktu_mulai: this.editData.waktu_mulai,
@@ -781,7 +781,7 @@
                     if (!confirm('Yakin ingin menghapus?')) return;
                     
                     try {
-                    await axios.delete(`${API}/jadwal/${jadwalId}`, {
+                    await axios.delete(`/api/jadwal/${jadwalId}`, {
                         data: { userId: this.currentUser.id }
                     });
                     await this.loadJadwal();
