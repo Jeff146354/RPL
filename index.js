@@ -4,8 +4,10 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
-
+const path = require('path');
 const app = express();
+const port = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -21,8 +23,12 @@ const pool = mysql.createPool({
   waitForConnections: true,
 });
 
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // REGISTER
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { username, password, role } = req.body;
   
   try {
@@ -41,7 +47,7 @@ app.post('/register', async (req, res) => {
 });
 
 // LOGIN
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   
   pool.query(
@@ -70,7 +76,7 @@ app.post('/login', (req, res) => {
 });
 
 // Jadwal
-app.post('/jadwal', (req, res) => {
+app.post('/api/jadwal', (req, res) => {
   const { 
     userId, 
     tanggal, 
@@ -144,7 +150,7 @@ app.post('/jadwal', (req, res) => {
 });
 
 // GET /jadwal?userId=123
-app.get('/jadwal', (req, res) => {
+app.get('/api/jadwal', (req, res) => {
   const userId = req.query.userId;
   if (!userId) return res.status(400).send('userId required');
 
@@ -166,7 +172,7 @@ app.get('/jadwal', (req, res) => {
 });
 
 // GET /verifikasi?dosenId=10
-app.get('/verifikasi', (req, res) => {
+app.get('/api/verifikasi', (req, res) => {
   const dosenId = req.query.dosenId;
   
   pool.query(
@@ -185,7 +191,7 @@ app.get('/verifikasi', (req, res) => {
 });
 
 // POST /verifikasi
-app.post('/verifikasi', (req, res) => {
+app.post('/api/verifikasi', (req, res) => {
   const { jadwalId, approved, komentar_dosen, dosenId } = req.body;
 
   pool.query(
@@ -207,7 +213,7 @@ app.post('/verifikasi', (req, res) => {
 });
 
 // GET /jadwal/bimbingan
-app.get('/jadwal/bimbingan', (req, res) => {
+app.get('/api/jadwal/bimbingan', (req, res) => {
   const dosenId = req.query.dosenId;
   
   pool.query(
@@ -225,7 +231,7 @@ app.get('/jadwal/bimbingan', (req, res) => {
 });
 
 // GET /dosen
-app.get('/dosen', (req, res) => {
+app.get('/api/dosen', (req, res) => {
     pool.query(
         "SELECT id, username FROM users WHERE role = 'dosen'",
         (err, results) => {
@@ -235,7 +241,7 @@ app.get('/dosen', (req, res) => {
     );
 });
 
-app.put('/jadwal/:id', (req, res) => {
+app.put('/api/jadwal/:id', (req, res) => {
   const jadwalId = req.params.id;
   const { userId, ...updateData } = req.body;
 
@@ -304,7 +310,7 @@ app.put('/jadwal/:id', (req, res) => {
   );
 });
 
-app.delete('/jadwal/:id', (req, res) => {
+app.delete('/api/jadwal/:id', (req, res) => {
   const { userId } = req.body;
   const jadwalId = req.params.id;
 
@@ -324,4 +330,4 @@ app.delete('/jadwal/:id', (req, res) => {
   );
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(port, () => console.log(`Server running on port ${port}`));
