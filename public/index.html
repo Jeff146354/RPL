@@ -689,30 +689,34 @@
                 },
 
                 async buatJadwal() {
-                  try {
-                    await axios.post(`${API}/jadwal`, {
-                      ...this.jadwalForm,
-                        userId: this.currentUser.id,
-                        penyelenggaraan: this.jadwalForm.penyelenggaraan,
-                        supervisor_id: this.jadwalForm.supervisor_id
-                    });
-                    alert('Jadwal berhasil dibuat!');
-                  } catch (error) {
-                    console.error(error);
-                    alert(`Gagal membuat jadwal: ${error.response?.data || error.message}`);
-                  }
+                    try {
+                        await axios.post(`${API}/jadwal`, {
+                            ...this.jadwalForm,
+                            userId: this.currentUser.id,
+                            penyelenggaraan: this.jadwalForm.penyelenggaraan,
+                            supervisor_id: this.jadwalForm.supervisor_id
+                        });
+                        alert('Jadwal berhasil dibuat!');
+                        
+                        await this.loadJadwal();
+                        
+                        this.activePage = 'jadwal';
+                    } catch (error) {
+                        console.error(error);
+                        alert(`Gagal membuat jadwal: ${error.response?.data || error.message}`);
+                    }
                 },
 
                 async loadJadwal() {
-                const response = await axios.get(`${API}/jadwal`, {
-                    params: { 
-                    userId: this.currentUser.id,
-                    sort: 'tanggal_asc' // Tambahkan parameter sorting di backend
-                    }
-                });
-                this.jadwalList = response.data.sort((a, b) => 
-                    new Date(a.tanggal) - new Date(b.tanggal)
-                );
+                    const response = await axios.get(`${API}/jadwal`, {
+                        params: { 
+                            userId: this.currentUser.id,
+                            sort: 'tanggal_asc'
+                        }
+                    });
+                    this.jadwalList = response.data.sort((a, b) => 
+                        new Date(a.tanggal) - new Date(b.tanggal)
+                    );
                 },
 
                 async loadVerifikasi() {
