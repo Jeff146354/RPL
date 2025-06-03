@@ -5,75 +5,180 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/sidebar.css">
+    <link rel="stylesheet" href="/navbar.css">
+
     <title>Halaman Dosen</title>
     <style>
-        [x-cloak] { display: none !important; }
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body>
-    <div x-data="app()" x-cloak>
-        <!-- Header Navigasi -->
-        <div class="header">
-            <div class="nav-container">
-                <h2>IPB University - Sistem Bimbingan</h2>
-                <div class="nav-menu">
-                    <a href="/dosen/dashboard" class="nav-button active-nav">
-                        👥 Bimbingan Saya
-                    </a>
-
-                    <a href="/dosen/verifikasi" class="nav-button">
-                        ✅ Verifikasi
-                    </a>
-
-                    <a href="/logout" class="nav-button logout-btn">
-                        🔒 Logout
-                    </a>
+    <div x-data="app()" x-cloak class="bimbingan-layout">
+        <%- include('../partials/sidebar-dosen') %>
+            <div class="main-content-wrapper">
+                <%- include('../partials/navbar') %>
+                <div class="box">
+                    <h1 class="title">Jadwal Bimbingan Tugas Akhir</h1>
                 </div>
-            </div>
-        </div>
+                <!-- Konten Utama -->
+                <div class="list-container">
+                    <div class="tab-container">
+                        <button @click="currentTab = 'bimbingan'" :class="{'active': currentTab === 'bimbingan'}"
+                            class="tab-button">
+                            Bimbingan Saya
+                        </button>
 
-
-        <!-- Konten Utama -->
-        <div class="container">
-            <div class="main-container">
-                <!-- Halaman Bimbingan Dosen -->
-                <h3 class="section-title">Jadwal Mahasiswa Bimbingan</h3>
-                <div class="jadwal-container">
-                    <template x-for="b in bimbinganList" :key="b.id">
-                        <div class="jadwal-card">
-                            <div class="jadwal-header">
-                                <h4 x-text="b.mahasiswa"></h4>
-                                <span class="status-badge" x-text="b.status"></span>
-                            </div>
-                            <div class="jadwal-content">
-                                <div class="jadwal-time">
-                                    <span class="date"
-                                        x-text="new Date(b.tanggal).toLocaleDateString('id-ID')"></span>
-                                    <span class="time" x-text="b.waktu_mulai + ' - ' + b.waktu_selesai"></span>
-                                </div>
-                                <div class="jadwal-meta">
-                                    <!-- Perbaiki field penyelenggaraan -->
-                                    <span x-text="'Cara: ' + b.penyelenggaraan"></span>
-                                    <p x-text="'Deskripsi: ' + b.deskripsi"></p>
-                                    <p x-text="'Komentar: ' + (b.komentar_mahasiswa || '-')"></p>
-                                    <p x-text="'Catatan Dosen: ' + (b.komentar_dosen || '-')"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
+                        <button @click="currentTab = 'verifikasi'" :class="{'active': currentTab === 'verifikasi'}"
+                            class="tab-button">
+                            Verifikasi
+                        </button>
+                    </div>
                 </div>
+                <div class="container">
+                    <div class="main-container">
+                        <!-- Konten Bimbingan -->
+                        <template x-if="currentTab === 'bimbingan'">
+                            <div class="content-box">
+                                <div class="jadwal-container">
+                                    <template x-if="bimbinganList.length === 0">
+                                        <div class="empty-state">
+                                            <p>Jadwal bimbingan kosong.</p>
+                                        </div>
+                                    </template>
+                                    <template x-for="b in bimbinganList" :key="b.id">
+                                        <div class="jadwal-card">
+                                            <div class="jadwal-header">
+                                                <h4 x-text="b.mahasiswa"></h4>
+                                                <span class="status-badge" x-text="b.status"></span>
+                                            </div>
+                                            <div class="jadwal-content">
+                                                <div class="jadwal-time">
+                                                    <span class="date"
+                                                        x-text="new Date(b.tanggal).toLocaleDateString('id-ID')"></span>
+                                                    <span class="time"
+                                                        x-text="b.waktu_mulai + ' - ' + b.waktu_selesai"></span>
+                                                </div>
+                                                <div class="jadwal-meta">
+                                                    <!-- Perbaiki field penyelenggaraan -->
+                                                    <span x-text="'Cara: ' + b.penyelenggaraan"></span>
+                                                    <p x-text="'Deskripsi: ' + b.deskripsi"></p>
+                                                    <p x-text="'Komentar: ' + (b.komentar_mahasiswa || '-')"></p>
+                                                    <p x-text="'Catatan Dosen: ' + (b.komentar_dosen || '-')"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                            </div>
+                        </template>
+
+                        <!-- Konten Verifikasi -->
+                        <template x-if="currentTab === 'verifikasi'">
+                            <div class="content-box">
+                                <div class="verifikasi-container">
+                                    <template x-if="verifList.length === 0">
+                                        <div class="empty-state">
+                                            <p>Tidak ada pengajuan jadwal.</p>
+                                        </div>
+                                    </template>
+                                    <template x-for="v in verifList" :key="v.id">
+                                        <div class="verif-card">
+                                            <div class="verif-header">
+                                                <h4 x-text="v.mahasiswa"></h4>
+                                            </div>
+                                            <div class="verif-content">
+                                                <div class="verif-time">
+                                                    <span
+                                                        x-text="new Date(v.tanggal).toLocaleDateString('id-ID')"></span>
+                                                    <span x-text="v.waktu_mulai + ' - ' + v.waktu_selesai"></span>
+                                                </div>
+                                                <div class="action-buttons">
+                                                    <button @click="approve(v.id)" class="action-btn approve">
+                                                        Setujui
+                                                    </button>
+                                                    <button @click="reject(v.id)" class="action-btn reject">
+                                                        Tolak
+                                                    </button>
+                                                </div>
+                                                <div class="input-group">
+                                                    <label>Komentar Dosen</label>
+                                                    <input type="text" x-model="v.komentarDosen">
+                                                    <!-- Pastikan x-model benar -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                        </template>
+                    </div>
+                </div>
+                </template>
             </div>
-        </div>
+    </div>
+    </div>
     </div>
 
     <script>
         function app() {
             return {
+                currentTab: 'bimbingan',
                 currentUser: JSON.parse('<%- initialData %>').currentUser,
-                bimbinganList: JSON.parse('<%- initialData %>').bimbinganList || []
+                verifList: JSON.parse('<%- initialData %>').verifList || [],
+                bimbinganList: JSON.parse('<%- initialData %>').bimbinganList || [],
+
+                async loadVerifikasi() {
+                    const resp = await axios.get('/verifikasi', {
+                        params: { userId: this.currentUser.id }
+                    });
+                    this.verifList = resp.data;
+                },
+
+                async loadBimbingan() {
+                    const resp = await axios.get('/bimbingan', {
+                        params: { userId: this.currentUser.id }
+                    });
+                    this.bimbinganList = resp.data;
+                },
+
+                async approve(jadwalId) {
+                    try {
+                        await axios.post('/verifikasi', {
+                            jadwalId,
+                            approved: true,
+                            dosenId: this.currentUser.id, // Tambahkan dosenId
+                            komentar_dosen: this.verifList.find(v => v.id === jadwalId)?.komentarDosen || ''
+                        });
+                        alert('Jadwal berhasil disetujui.');
+                        await this.loadVerifikasi();
+                        await this.loadBimbingan();
+                    } catch (error) {
+                        alert(`Gagal menyetujui: ${error.response?.data || error.message}`);
+                    }
+                },
+
+                async reject(jadwalId) {
+                    try {
+                        await axios.post('/verifikasi', {
+                            jadwalId,
+                            approved: false,
+                            dosenId: this.currentUser.id, // Tambahkan dosenId
+                            komentar_dosen: this.verifList.find(v => v.id === jadwalId)?.komentarDosen || ''
+                        });
+                        alert('Jadwal berhasil ditolak.');
+                        await this.loadVerifikasi();
+                        await this.loadBimbingan();
+                    } catch (error) {
+                        alert(`Gagal menolak: ${error.response?.data || error.message}`);
+                    }
+                },
             }
         }
     </script>
 </body>
+
 </html>
