@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+h1, h2, label, input {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+body {
+  background-color: #f4f5fc;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url(pic/Login.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Auth Page */
+
+.auth-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    width: 100%;
+    width: 500px;
+    background-color: #F3F4FF;
+}
+
+.logo img{
+  height: 60px;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #1e3a8a;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  text-align: left;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #6C757D;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d0d7e2;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.form-options a {
+  text-decoration: none;
+  color: #1e3a8a;
+}
+
+.button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4b49c6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.p {
+  font-size: 16px;
+}
+
+/* Ganti bahasa */
+
+.language-switch {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.language-switch select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.register-link {
+  font-size: 14px;
+  color: #333; 
+  text-align: center;
+  margin-top: 16px;
+}
+
+.register-link a {
+  color: #6a1b9a; 
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.blank-space {
+    height: 25px;
+}
