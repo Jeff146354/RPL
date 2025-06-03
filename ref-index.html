@@ -111,7 +111,7 @@
         <!-- Halaman Setelah Login -->
         <template x-if="isLoggedIn">
             <div>
-                <!-- <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+                <!-- <div class="toggle-btn" onclick="toggleSidebar()">â˜°</div>
                     <div class="sidebar closed" id="sidebar">
 
                         <div class="logo">Student<span style="color: black">PORTAL</span></div>
@@ -121,29 +121,29 @@
                             <li><img src="beranda.png" alt="Beranda" class="icon" />
                                 <span class="label">Beranda</span></li>
                             <li onclick="toggleSubmenu('akademik')">
-                                <span class="icon">📘</span><span class="label">Akademik</span>
+                                <span class="icon">ðŸ“˜</span><span class="label">Akademik</span>
                             </li>
                             <ul id="akademik" class="submenu">
-                            <li><span class="icon">⚪</span><span class="label">Jadwal Kuliah</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Jadwal Ujian</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Rekapitulasi Studi</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Kehadiran</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Tugas Akhir</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Kalender Akademik</span></li>
-                            <li><span class="icon">⚪</span><span class="label">Jadwal Prodi</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Jadwal Kuliah</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Jadwal Ujian</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Rekapitulasi Studi</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Kehadiran</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Tugas Akhir</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Kalender Akademik</span></li>
+                            <li><span class="icon">âšª</span><span class="label">Jadwal Prodi</span></li>
                             </ul>
                         
 
-                            <li><span class="icon">🗒</span><span class="label">Rencana Studi</span></li>
-                            <li><span class="icon">⭐</span><span class="label">EPBM</span></li>
-                            <li><span class="icon">📄</span><span class="label">Catatan Kuliah</span></li>
-                            <li><span class="icon">🎓</span><span class="label">Kemahasiswaan</span></li>
-                            <li><span class="icon">💰</span><span class="label">SPP</span></li>
-                            <li><span class="icon">🎓</span><span class="label">Kelulusan</span></li>
-                            <li><span class="icon">📤</span><span class="label">Upload File</span></li>
-                            <li><span class="icon">➕</span><span class="label">Kesehatan</span></li>
-                            <li><span class="icon">🚗</span><span class="label">Kendaraan</span></li>
-                            <li><span class="icon">❓</span><span class="label">Panduan</span></li>
+                            <li><span class="icon">ðŸ—’</span><span class="label">Rencana Studi</span></li>
+                            <li><span class="icon">â­</span><span class="label">EPBM</span></li>
+                            <li><span class="icon">ðŸ“„</span><span class="label">Catatan Kuliah</span></li>
+                            <li><span class="icon">ðŸŽ“</span><span class="label">Kemahasiswaan</span></li>
+                            <li><span class="icon">ðŸ’°</span><span class="label">SPP</span></li>
+                            <li><span class="icon">ðŸŽ“</span><span class="label">Kelulusan</span></li>
+                            <li><span class="icon">ðŸ“¤</span><span class="label">Upload File</span></li>
+                            <li><span class="icon">âž•</span><span class="label">Kesehatan</span></li>
+                            <li><span class="icon">ðŸš—</span><span class="label">Kendaraan</span></li>
+                            <li><span class="icon">â“</span><span class="label">Panduan</span></li>
                         </ul>
                     </div>
                 </div>
@@ -159,14 +159,14 @@
                             <button @click="activePage = 'bimbingan'" class="nav-button"
                                 :class="{ 'active-nav': activePage === 'bimbingan' }"
                                 x-show="currentUser.role === 'dosen'">
-                                👥 Bimbingan Saya
+                                ðŸ‘¥ Bimbingan Saya
                             </button>
 
                             <!-- Untuk Mahasiswa -->
                             <button @click="activePage = 'jadwal'" class="nav-button"
                                 :class="{ 'active-nav': activePage === 'jadwal' }"
                                 x-show="currentUser.role === 'mahasiswa'">
-                                📅 Jadwal Saya
+                                ðŸ“… Jadwal Saya
                             </button>
 
                             <!-- Tombol Aksi Utama -->
@@ -175,11 +175,11 @@
                                 class="nav-button"
                                 :class="{ 'active-nav': activePage === 'buat-jadwal' || activePage === 'verifikasi' }">
                                 <span
-                                    x-text="currentUser.role === 'mahasiswa' ? '✏️ Buat Jadwal' : '✅ Verifikasi'"></span>
+                                    x-text="currentUser.role === 'mahasiswa' ? 'âœï¸ Buat Jadwal' : 'âœ… Verifikasi'"></span>
                             </button>
 
                             <button @click="logout" class="nav-button logout-btn">
-                                🔒 Logout
+                                ðŸ”’ Logout
                             </button>
                         </div>
                     </div>
@@ -230,12 +230,12 @@
                                     <div class="action-buttons">
                                         <button x-show="j.status === 'Sedang Verifikasi'" @click="openEditModal(j)"
                                             class="action-btn edit-btn">
-                                            ✏️ Edit
+                                            âœï¸ Edit
                                         </button>
 
                                         <button x-show="j.status === 'Sedang Verifikasi'" @click="deleteJadwal(j.id)"
                                             class="action-btn delete-btn">
-                                            🗑️ Hapus
+                                            ðŸ—‘ï¸ Hapus
                                         </button>
                                     </div>
                                     <div class="jadwal-content">
