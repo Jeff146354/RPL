@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal Sidebar</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #f0f2f5;
+      background-image: url('pic/image.png'); /* Ganti dengan path file Anda */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    .sidebar.closed .label,
+    .sidebar.closed .menu input,
+    .sidebar.closed .submenu {
+      display: none;
+    }
+
+    .sidebar.closed .menu ul {
+      margin-top: 50px;
+    }
+
+    .sidebar.closed .logo {
+      display: none;
+    }
+
+    .sidebar.closed li {
+      justify-content: center;
+    }
+
+    .sidebar .logo {
+      font-size: 1.2rem;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .sidebar.closed .logo {
+      text-align: center;
+    }
+
+    .icon {
+      height: 30px;
+      display: inline-block;
+      object-fit: contain;
+      text-align: center;
+    }
+
+    .sidebar {
+      background: #fff;
+      width: 250px;
+      transition: width 0.3s;
+      overflow-x: hidden;
+      border-right: 1px solid #ddd;
+      position: relative;
+      z-index: 1001;
+    }
+
+    .sidebar.closed {
+      width: 60px;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1000;
+      margin-left: 10px;
+      margin-top: 3px;
+      z-index: 1002
+    }
+
+
+    .sidebar .logo {
+      padding: 1rem;
+      font-weight: bold;
+      color: #4f46e5;
+    }
+
+    .menu {
+      padding: 1rem;
+    }
+
+    .menu input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    li:hover {
+      background: #edf2ff;
+    }
+
+    .submenu {
+      padding-left: 1.5rem;
+      display: none;
+    }
+
+    .submenu.open {
+      display: block;
+    }
+
+    .icon {
+      width: 20px;
+      text-align: center;
+    }
+
+    .label {
+      flex: 1;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 20px;
+      z-index: 999;
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .logout {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+  <div class="nav-icons">
+      <img src="pic/kompas.png" class="nav-icon" alt="Pen" />
+      <img src="pic/chat.png" class="nav-icon" alt="Chat" />
+      <img src="pic/notif.png" class="nav-icon" alt="Notifications" />
+      <span class="logout"><img src="pic/logout.png" class="nav-icon" alt="Logout" /> Keluar</span>
+    </div>
+  </div>
+
+
+
+  <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+  <div class="sidebar closed" id="sidebar">
+
+    <div class="logo">Student<span style="color: black">PORTAL</span></div>
+    <div class="menu">
+      <input type="text" placeholder="Cari Menu...">
+      <ul>
+        <li><img src="pic/beranda.png" alt="Beranda" class="icon" />
+<span class="label">Beranda</span></li>
+        <li onclick="toggleSubmenu('akademik')">
+          <img src="pic/akademik.png" alt="Beranda" class="icon" /><span class="label">Akademik</span>
+        </li>
+        <ul id="akademik" class="submenu">
+          <li><span class="icon">⚪</span><span class="label">Jadwal Bimbingan</span></li>
+          <li><span class="icon">⚪</span><span class="label">Jadwal Kuliah</span></li>
+          <li><span class="icon">⚪</span><span class="label">Jadwal Ujian</span></li>
+          <li><span class="icon">⚪</span><span class="label">Rekapitulasi Studi</span></li>
+          <li><span class="icon">⚪</span><span class="label">Kehadiran</span></li>
+          <li><span class="icon">⚪</span><span class="label">Tugas Akhir</span></li>
+          <li><span class="icon">⚪</span><span class="label">Kalender Akademik</span></li>
+          <li><span class="icon">⚪</span><span class="label">Jadwal Prodi</span></li>
+        </ul>
+      
+
+        <li><img src="pic/rencanastudi.png" alt="Beranda" class="icon" /><span class="label">Rencana Studi</span></li>
+        <li><img src="pic/EPBM.png" alt="Beranda" class="icon" /><span class="label">EPBM</span></li>
+        <li><img src="pic/catatankuliah.png" alt="Beranda" class="icon" /><span class="label">Catatan Kuliah</span></li>
+        <li><img src="pic/kemahsiswaan.png" alt="Beranda" class="icon" /><span class="label">Kemahasiswaan</span></li>
+        <li><img src="pic/spp.png" alt="Beranda" class="icon" /><span class="label">SPP</span></li>
+        <li><img src="pic/kelulusan.png" alt="Beranda" class="icon" /><span class="label">Kelulusan</span></li>
+        <li><img src="pic/upload.png" alt="Beranda" class="icon" /><span class="label">Upload File</span></li>
+        <li><img src="pic/kesehatan.png" alt="Beranda" class="icon" /><span class="label">Kesehatan</span></li>
+        <li><img src="pic/kendaraan.png" alt="Beranda" class="icon" /><span class="label">Kendaraan</span></li>
+        <li><img src="pic/panduan.png" alt="Beranda" class="icon" /><span class="label">Panduan</span></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('closed');
+    }
+
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      submenu.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
