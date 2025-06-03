@@ -1,0 +1,41 @@
+.header {
+    background-color: #FEFEFE;
+    color: #7f7f7f;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-container {
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the end (right) */
+    align-items: center;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Space between icons */
+}
+
+.nav-icon {
+    width: 20px; /* Corrected typo: should be px not just a number */
+    height: 20px; /* Corrected typo: should be px not just a number */
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between logout icon and text */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.logout a {
+    text-decoration: none;
+    color: inherit; /* Ensures the link text inherits color from its parent (.logout) */
+}
