@@ -166,7 +166,7 @@ app.get('/mahasiswa/dashboard', isAuthenticated, async (req, res) => {
 	});
 });
 
-app.get('/mahasiswa/jadwal', isAuthenticated, async (req, res) => {
+app.get('/mahasiswa/bimbingan', isAuthenticated, async (req, res) => {
     try {
         const userId = req.session.user.id;
         
@@ -189,7 +189,7 @@ app.get('/mahasiswa/jadwal', isAuthenticated, async (req, res) => {
 		const [dosens] = await pool.query(
 		"SELECT id, username FROM users WHERE role = 'dosen'");
 
-		res.render('mahasiswa/jadwal', {
+		res.render('mahasiswa/bimbingan', {
 			initialData: JSON.stringify({
 				jadwalList: jadwals || [],
 				listDosen: dosens || [],
@@ -207,19 +207,6 @@ app.get('/mahasiswa/jadwal', isAuthenticated, async (req, res) => {
 });
 
 
-app.get('/mahasiswa/buat', isAuthenticated, async (req, res) => {
-	const [dosens] = await pool.query(
-	"SELECT id, username FROM users WHERE role = 'dosen'");
-	
-	res.render('mahasiswa/buat', {
-		initialData: JSON.stringify({
-			listDosen: dosens || [],
-			currentUser: req.session.user,
-		})
-	});
-});
-
-
 app.get('/dosen/dashboard', isAuthenticated, async (req, res) => {
 	res.render('dosen/dashboard', {
 		initialData: JSON.stringify({
@@ -228,15 +215,11 @@ app.get('/dosen/dashboard', isAuthenticated, async (req, res) => {
 	});
 });
 
-
 app.get('/dosen/bimbingan', isAuthenticated, async (req, res) => {
-    try {
+	try {
         const userId = req.session.user.id;
         
-        if (!userId) {
-            return res.status(400).send('User ID required');
-        }
-
+        
 		const [bimbingans] = await pool.query(
 			`SELECT j.*, u.username AS mahasiswa 
 				FROM jadwal j
@@ -245,26 +228,6 @@ app.get('/dosen/bimbingan', isAuthenticated, async (req, res) => {
 				ORDER BY j.tanggal ASC, j.waktu_mulai ASC`,
 			[userId],
 		);
-
-		res.render('dosen/bimbingan', {
-			initialData: JSON.stringify({
-				currentUser: req.session.user,
-				bimbinganList: bimbingans || [],
-            })
-        });
-
-    } catch (error) {
-        console.error('Error fetching bimbingan:', error);
-        res.status(500).render('error', { 
-            message: 'Gagal memuat bimbingan',
-            error
-        });
-    }
-});
-
-app.get('/dosen/verifikasi', isAuthenticated, async (req, res) => {
-	try {
-        const userId = req.session.user.id;
 	
 		const [sedangVerifikasis] = await pool.query(
 			`SELECT j.*, u.username AS mahasiswa 
@@ -276,9 +239,10 @@ app.get('/dosen/verifikasi', isAuthenticated, async (req, res) => {
 			[userId],
 		);
 		
-		res.render('dosen/verifikasi', {
+		res.render('dosen/bimbingan', {
 			initialData: JSON.stringify({
 				verifList: sedangVerifikasis || [],
+				bimbinganList: bimbingans || [],
 				currentUser: req.session.user,
             })
         });
@@ -578,6 +542,29 @@ app.get('/verifikasi', async (req, res) => {
 	} catch (error) {
         res.status(500).render('error', {
             message: 'Gagal memuat list verifikasi',
+            error
+		});
+	}
+});
+
+app.get('/bimbingan', async (req, res) => {
+	try {
+        const { userId = 'tanggal_asc' } = req.query;
+
+		// Base query
+		let query = `
+            SELECT j.*, u.username AS mahasiswa 
+            FROM jadwal j
+            JOIN users u ON j.user_id = u.id
+            WHERE j.supervisor_id = ?  -- Filter berdasarkan dosen
+            ORDER BY j.tanggal ASC, j.waktu_mulai ASC`;
+
+        const [results] = await pool.query(query, [userId]);
+
+        res.json(results);
+	} catch (error) {
+        res.status(500).render('error', {
+            message: 'Gagal memuat list bimbingan',
             error
 		});
 	}
