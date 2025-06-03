@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal</title>
+  <link rel="stylesheet" href="/sidebar.css" />
+</head>
+<body style="background-image: url('/pic/image.png'); background-size: cover;">
+  <div class="navbar">
+    <div class="nav-icons">
+      <img src="/pic/kompas.png" class="nav-icon" alt="Pen" />
+      <img src="/pic/chat.png" class="nav-icon" alt="Chat" />
+      <img src="/pic/notif.png" class="nav-icon" alt="Notifications" />
+      <span class="logout"><img src="/pic/logout.png" class="nav-icon" alt="Logout" /> Keluar</span>
+    </div>
+  </div>
+
+  <%- include('partials/sidebar') %>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('closed');
+    }
+
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      submenu.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
