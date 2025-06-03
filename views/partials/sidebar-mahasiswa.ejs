@@ -1,0 +1,63 @@
+<div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+<link rel="stylesheet" href="/sidebar.css">
+
+
+<div class="sidebar closed" id="sidebar">
+
+  <div class="logo">Student<span style="color: black">PORTAL</span></div>
+  <div class="menu">
+    <input type="text" placeholder="Cari Menu...">
+    <ul>
+      <li><img src="/pic/beranda.png" alt="Beranda" class="icon" />
+      <span class="label"><a href="/mahasiswa/dashboard" class="label">Beranda</a></span></li>
+
+      <li onclick="toggleSubmenu('akademik')">
+        <img src="/pic/akademik.png" alt="Akademik" class="icon" /><span class="label">Akademik</span>
+      </li>
+      <ul id="akademik" class="submenu">
+        <li><span class="icon">o</span><span class="label"><a href="/mahasiswa/bimbingan" class="label">Jadwal Bimbingan</a></span></li>
+        <li><span class="icon">o</span><span class="label">Jadwal Kuliah</span></li>
+        <li><span class="icon">o</span><span class="label">Jadwal Ujian</span></li>
+        <li><span class="icon">o</span><span class="label">Rekapitulasi Studi</span></li>
+        <li><span class="icon">o</span><span class="label">Kehadiran</span></li>
+        <li><span class="icon">o</span><span class="label">Tugas Akhir</span></li>
+        <li><span class="icon">o</span><span class="label">Kalender Akademik</span></li>
+        <li><span class="icon">o</span><span class="label">Jadwal Prodi</span></li>
+      </ul>
+
+      <li><img src="/pic/rencanastudi.png" alt="Rencana Studi" class="icon" /><span class="label">Rencana Studi</span></li>
+      <li><img src="/pic/EPBM.png" alt="EPBM" class="icon" /><span class="label">EPBM</span></li>
+      <li><img src="/pic/catatankuliah.png" alt="Catatan Kuliah" class="icon" /><span class="label">Catatan Kuliah</span></li>
+      <li><img src="/pic/kemahsiswaan.png" alt="Kemahasiswaan" class="icon" /><span class="label">Kemahasiswaan</span></li>
+      <li><img src="/pic/spp.png" alt="SPP" class="icon" /><span class="label">SPP</span></li>
+      <li><img src="/pic/kelulusan.png" alt="Kelulusan" class="icon" /><span class="label">Kelulusan</span></li>
+      <li><img src="/pic/upload.png" alt="Upload File" class="icon" /><span class="label">Upload File</span></li>
+      <li><img src="/pic/kesehatan.png" alt="Kesehatan" class="icon" /><span class="label">Kesehatan</span></li>
+      <li><img src="/pic/kendaraan.png" alt="Kendaraan" class="icon" /><span class="label">Kendaraan</span></li>
+      <li><img src="/pic/panduan.png" alt="Panduan" class="icon" /><span class="label">Panduan</span></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('closed');
+    }
+
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      submenu.classList.toggle('open');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
